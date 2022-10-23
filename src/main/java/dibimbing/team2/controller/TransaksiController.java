@@ -1,10 +1,10 @@
 package dibimbing.team2.controller;
 
-import com.dibimbing.dibimbing.utils.TemplateResponse;
 import dibimbing.team2.dao.TransaksiRequest;
 import dibimbing.team2.model.Transaksi;
 import dibimbing.team2.repository.TransaksiRepository;
 import dibimbing.team2.service.TransaksiService;
+import dibimbing.team2.utils.TemplateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

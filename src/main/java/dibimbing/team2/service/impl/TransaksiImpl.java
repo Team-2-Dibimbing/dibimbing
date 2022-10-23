@@ -1,6 +1,5 @@
 package dibimbing.team2.service.impl;
 
-import com.dibimbing.dibimbing.utils.TemplateResponse;
 import dibimbing.team2.model.Barang;
 import dibimbing.team2.dao.TransaksiRequest;
 import dibimbing.team2.model.Pembeli;
@@ -9,6 +8,7 @@ import dibimbing.team2.repository.BarangRepository;
 import dibimbing.team2.repository.PembeliRepository;
 import dibimbing.team2.repository.TransaksiRepository;
 import dibimbing.team2.service.TransaksiService;
+import dibimbing.team2.utils.TemplateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

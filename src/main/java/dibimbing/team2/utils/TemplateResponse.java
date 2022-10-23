@@ -1,4 +1,4 @@
-package com.dibimbing.dibimbing.utils;
+package dibimbing.team2.utils;
 
 import org.springframework.stereotype.Component;
 
