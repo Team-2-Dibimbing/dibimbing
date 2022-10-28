@@ -51,20 +51,14 @@ public class TransaksiController {
     @GetMapping("/list")
     public ResponseEntity<Map> listByBama(
             @RequestParam() Integer page,
-            @RequestParam() Integer size,
-            @RequestParam(required = false) String  namaBarang,// ga mandatory : default mandatory
-            @RequestParam(required = false) String namPembeli) {
+            @RequestParam() Integer size
+    )
+    {
         Map map = new HashMap();
         Page<Transaksi> list = null;
-        Pageable show_data = PageRequest.of(page, size, Sort.by("id").descending());//batasin roq
+        Pageable show_data = PageRequest.of(page, size, Sort.by("id").descending());
 
-        if(namaBarang != null && !namaBarang.isEmpty()){
-            list = transaksiRepository.findByBarangNamaLike("%"+namaBarang+"%",show_data);
-        } if(namPembeli != null && !namPembeli.isEmpty()){
-            list = transaksiRepository.findByPembeliNamaLike("%"+namPembeli+"%",show_data);
-        } else{
-            list = transaksiRepository.getAllData(show_data);
-        }
+        list = transaksiRepository.getAllData(show_data);
         return new ResponseEntity<Map>(templateResponse.templateSukses(list), new HttpHeaders(), HttpStatus.OK);
     }
 }

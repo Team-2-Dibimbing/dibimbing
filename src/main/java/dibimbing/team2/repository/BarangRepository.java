@@ -30,11 +30,9 @@ public interface BarangRepository extends PagingAndSortingRepository<Barang, Lon
     public Barang findBySatuanAndHargaOrNamaLike(String satuan, int harga, String nama);// "'%%'"
 
     @Query("select c from Barang c where  c.harga BETWEEN :priceMin and :priceMax")
-// nama class
     Page<Barang> getDataByPrice(Double priceMin, Double priceMax, Pageable pageable);
 
     @Query("select c from Barang c where  c.harga BETWEEN :priceMin and :priceMax and c.nama like :nama")
-// nama class
     Page<Barang> getDataByPriceAndNama(Double priceMin, Double priceMax, String nama, Pageable pageable);
 
 }

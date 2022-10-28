@@ -4,9 +4,11 @@ import dibimbing.team2.model.Barang;
 import dibimbing.team2.dao.TransaksiRequest;
 import dibimbing.team2.model.Pembeli;
 import dibimbing.team2.model.Transaksi;
+import dibimbing.team2.model.oauth.User;
 import dibimbing.team2.repository.BarangRepository;
 import dibimbing.team2.repository.PembeliRepository;
 import dibimbing.team2.repository.TransaksiRepository;
+import dibimbing.team2.repository.oauth.UserRepository;
 import dibimbing.team2.service.TransaksiService;
 import dibimbing.team2.utils.TemplateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,9 @@ public class TransaksiImpl implements TransaksiService {
     @Autowired
     public PembeliRepository pembeliRepository;
 
+    @Autowired
+    public UserRepository userRepository;
+
     @Override
     public Map simpan(TransaksiRequest request) {
         try {
@@ -46,13 +51,15 @@ public class TransaksiImpl implements TransaksiService {
                 return templateResponse.templateEror("Id Barang Tidak ada di database");
             }
 
-            Pembeli chekIdPembeli = pembeliRepository.getbyID(request.getIdPembeli());
+            User chekIdPembeli = userRepository.findById2(request.getIdPembeli());
             if (templateResponse.chekNull(chekIdBarang)) {
                 return templateResponse.templateEror("Id Pembeli Tidak ada di database");
             }
 
             //disimpan ke db: objek transaksi
             Transaksi objSave = new Transaksi();
+            objSave.setTotalHarga(objSave.getHarga()*objSave.getQty());
+            objSave.setStatus("dipesan");
             objSave.setBarang(chekIdBarang);
             objSave.setPembeli(chekIdPembeli);
             objSave.setHarga(chekIdBarang.getHarga());
@@ -130,4 +137,29 @@ public class TransaksiImpl implements TransaksiService {
             return templateResponse.templateEror(e);
         }
     }
+
+    @Override
+    public Map cancel(Long obj) {
+        try {
+            if (templateResponse.chekNull(obj)) {
+                return templateResponse.templateEror("Id Transaksi is required");
+            }
+            //            1. chek id barang
+            Transaksi chekIdTransaksi = transaksiRepository.getbyID(obj);
+            if (templateResponse.chekNull(chekIdTransaksi)) {
+                return templateResponse.templateEror("Id Transksi Not found");
+            }
+
+//            2. update , tanggal deleted saja
+            chekIdTransaksi.setDeleted_date(new Date());//
+            transaksiRepository.save(chekIdTransaksi);
+
+            return templateResponse.templateSukses("sukses canceled");
+
+        } catch (Exception e) {
+            return templateResponse.templateEror(e);
+        }
+    }
+
+
 }

@@ -1,5 +1,6 @@
 package dibimbing.team2.model;
 
+import dibimbing.team2.model.oauth.User;
 import lombok.Data;
 import org.hibernate.annotations.Where;
 
@@ -18,6 +19,30 @@ public class Pembeli extends AbstractDate implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nama", nullable = false, length = 45)
+    @OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_user", referencedColumnName = "id")
+    private User user;
+
+    @Column(name = "nama", length = 45)
     private String nama;
+
+    @Column(name = "alamat", columnDefinition = "TEXT")
+    private String alamat;
+
+    @Column(name = "kota", length = 50)
+    private String kota;
+
+    @Column(name = "propinsi", length = 50)
+    private String propinsi;
+
+    @Column(name = "negara", length = 50)
+    private String negara;
+
+    @Column(name = "kd_pos", length = 10)
+    private String kodepos;
+
+    @Column(name = "no_hp", length = 20)
+    private String noHp;
+
+
 }

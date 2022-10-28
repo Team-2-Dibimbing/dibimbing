@@ -17,7 +17,7 @@ public interface TransaksiRepository extends
 
     public Page<Transaksi> findByBarangNamaLike(String namaBarang, Pageable pageable);
 
-    public Page<Transaksi> findByPembeliNamaLike(String namaPembeli, Pageable pageable);
+    public Page<Transaksi> findByPembeliFullnameLike(String namaPembeli, Pageable pageable);
 
     @Query("select c from Transaksi c")// nama class
     public Page<Transaksi> getAllData(Pageable pageable);

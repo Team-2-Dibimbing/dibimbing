@@ -1,5 +1,6 @@
 package dibimbing.team2.model;
 
+import dibimbing.team2.model.oauth.User;
 import lombok.Data;
 import org.hibernate.annotations.Where;
 
@@ -29,5 +30,9 @@ public class Barang extends  AbstractDate implements Serializable {
 
     @Column(name = "harga", nullable = false, length = 11)
     private Double harga;
+
+    @ManyToOne
+    @JoinColumn(name = "id_user")
+    private User user;
 }
 

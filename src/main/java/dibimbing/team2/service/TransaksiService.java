@@ -26,5 +26,7 @@ public interface TransaksiService {
 
     public Map delete(Long obj);
 
+    public Map cancel(Long obj);
+
     // list : controller
 }

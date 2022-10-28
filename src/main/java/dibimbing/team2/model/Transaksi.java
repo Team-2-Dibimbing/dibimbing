@@ -1,6 +1,8 @@
 package dibimbing.team2.model;
 
+import dibimbing.team2.model.oauth.User;
 import lombok.Data;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
@@ -14,21 +16,30 @@ public class Transaksi extends AbstractDate implements Serializable {
     //GenerationType.AUTO : nextvall all tabel sequense
     // GenerationType.IDENTITY : nextvall per tabel sequense
     @Id
-    @Column(name = "id_transaksi")
+    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_transaksi;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "id_barang")
     Barang barang;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "id_pembeli")
-    Pembeli pembeli;
+    User pembeli;
+
+    @Column(name = "nama")
+    private String nama;
 
     private Double harga;
 
     private Integer qty;
+
+    private Double totalHarga;
+
+    private String status;
+    //dipesan, dibayar, cancel
 
 }
 
