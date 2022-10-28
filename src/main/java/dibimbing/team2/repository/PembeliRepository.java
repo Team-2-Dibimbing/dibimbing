@@ -18,6 +18,6 @@ public interface PembeliRepository extends
     @Query("select c from Pembeli c ")// nama class
     public Page<Pembeli> getAllData(Pageable pageable);
 
-    @Query("select c from Pembeli c where c.nama like :nama")// nama class
-    public Page<Pembeli> findByNama(String nama, Pageable pageable);
+//    @Query("select c from Pembeli c where c.nama like :nama")// nama class
+//    public Page<Pembeli> findByNama(String nama, Pageable pageable);
 }

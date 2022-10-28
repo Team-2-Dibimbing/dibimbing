@@ -1,6 +1,7 @@
 package dibimbing.team2.model.oauth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import dibimbing.team2.model.Pembeli;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -42,6 +43,9 @@ public class User implements UserDetails, Serializable {
 
     private Date otpExpiredDate;
 
+
+    @OneToOne(mappedBy = "user")
+    private Pembeli pembeli;
 
     @JsonIgnore
     private boolean enabled = true;

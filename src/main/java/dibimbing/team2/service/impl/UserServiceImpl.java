@@ -203,6 +203,8 @@ public class UserServiceImpl implements UserService {
             String[] roleNames = {"ROLE_USER", "ROLE_READ", "ROLE_WRITE"}; // admin
             User user = new User();
             user.setUsername(objModel.getEmail().toLowerCase());
+            user.setUsername1(objModel.getUsername().toLowerCase());
+            user.setFullname(objModel.getFullname());
 
             //step 1 :
             user.setEnabled(false); // matikan user

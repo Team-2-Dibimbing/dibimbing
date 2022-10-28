@@ -1,5 +1,6 @@
 package dibimbing.team2.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import dibimbing.team2.model.oauth.User;
 import lombok.Data;
 import org.hibernate.annotations.Where;
@@ -19,12 +20,10 @@ public class Pembeli extends AbstractDate implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @JsonIgnore
     @OneToOne(targetEntity = User.class, cascade = CascadeType.ALL)
     @JoinColumn(name = "id_user", referencedColumnName = "id")
     private User user;
-
-    @Column(name = "nama", nullable = false, length = 45)
-    private String nama;
 
     @Column(name = "alamat", columnDefinition = "TEXT")
     private String alamat;

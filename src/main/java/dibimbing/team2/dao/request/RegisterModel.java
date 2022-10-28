@@ -23,6 +23,9 @@ public class RegisterModel {
 
     public String username;
 
+    public String fullname;
+
+
 //    @ValidPassword
     @NotNull(message =  "Password is mandatory")
     public String password;

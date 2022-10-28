@@ -56,11 +56,16 @@ public class RegisterController {
 
         User user = userRepository.checkExistingEmail(objModel.getEmail());
         if (null != user) {
-            return new ResponseEntity<Map>(templateCRUD.notFound("Username sudah ada"), HttpStatus.OK);
-
+            return new ResponseEntity<Map>(templateCRUD.notFound("Email is already registered"), HttpStatus.OK);
         }
+        User checkUn = userRepository.checkExistingUsername(objModel.getUsername());
+        if ( null != checkUn ){
+            return new ResponseEntity<Map>(templateCRUD.notFound("Username is already registered"), HttpStatus.OK);
+        }
+
         map = serviceReq.registerManual(objModel);
         Map sendOTP = sendEmailegister(objModel);
+
         return new ResponseEntity<Map>(map, HttpStatus.OK);
     }
 
@@ -131,36 +136,6 @@ public class RegisterController {
 
     SimpleStringUtils simpleStringUtils = new SimpleStringUtils();
 
-
-    @PostMapping("/sendemailfile")
-    public ResponseEntity<String> sendemailfile(HttpServletRequest request3) {
-        MailRequest request = new MailRequest();
-        request.setName("Invoice Test name");
-        request.setTo("rikialdipari@gmail.com");
-        request.setFrom("rikialdipari@gmail.com");
-        request.setSubject("Invoice Test");
-        Map model = new HashMap<>();
-        model.put("namesaya", "riki aldi pari");
-
-        model.put("chuteicon", "https://tinypng.com/images/social/website.jpg");
-        BigDecimal total= new BigDecimal(0);
-
-        Pageable show_data = simpleStringUtils.getShort("id", "desc", 0, 1);
-        Page<Barang> data = barangRepository.getAllData(show_data);
-
-
-        model.put("datainvoice", data.getContent());
-        model.put("iconuser","https://tinypng.com/images/social/website.jpg") ;
-
-        List<String> dataFIle = new ArrayList<>();
-        dataFIle.add(0, "123.pdf");
-        dataFIle.add(1, "1234.pdf");
-        dataFIle.add(2, "12345.pdf");
-        model.put("dataFile",dataFIle);
-        MailResponse ma =  service.sendEmailWithFile(request, model);
-        System.out.println("MailResponse 1="+ma.getMessage());
-        return ResponseEntity.ok().body("Successfully");
-    }
 
 
 

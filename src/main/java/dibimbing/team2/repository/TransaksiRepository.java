@@ -15,9 +15,9 @@ public interface TransaksiRepository extends
     @Query("select c from Transaksi c WHERE c.id = :id")
     public Transaksi getbyID(@Param("id") Long id);
 
-    public Page<Transaksi> findByBarangNamaLike(String namaBarang, Pageable pageable);
-
-    public Page<Transaksi> findByPembeliNamaLike(String namaPembeli, Pageable pageable);
+//    public Page<Transaksi> findByBarangNamaLike(String namaBarang, Pageable pageable);
+//
+//    public Page<Transaksi> findByPembeliNamaLike(String namaPembeli, Pageable pageable);
 
     @Query("select c from Transaksi c")// nama class
     public Page<Transaksi> getAllData(Pageable pageable);
