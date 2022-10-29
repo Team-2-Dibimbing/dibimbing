@@ -31,14 +31,15 @@ public class TransaksiController {
 
     @Autowired
     public TransaksiRepository transaksiRepository;
+
     @PostMapping("")
-    public ResponseEntity<Map> save(  @RequestBody TransaksiRequest objModel) {
+    public ResponseEntity<Map> save(@RequestBody TransaksiRequest objModel) {
         Map obj = transaksiService.simpan(objModel);
         return new ResponseEntity<Map>(obj, HttpStatus.OK);
     }
 
     @PutMapping("")
-    public ResponseEntity<Map> update(  @RequestBody TransaksiRequest objModel ) {
+    public ResponseEntity<Map> update(@RequestBody TransaksiRequest objModel ) {
         Map map = transaksiService.update(objModel);
         return new ResponseEntity<Map>(map, HttpStatus.OK);
     }
@@ -49,23 +50,23 @@ public class TransaksiController {
         return new ResponseEntity<Map>(map, HttpStatus.OK);
     }
 
-//    @GetMapping("/list")
-//    public ResponseEntity<Map> listByBama(
-//            @RequestParam() Integer page,
-//            @RequestParam() Integer size,
-//            @RequestParam(required = false) String  namaBarang,// ga mandatory : default mandatory
-//            @RequestParam(required = false) String namPembeli) {
-//        Map map = new HashMap();
-//        Page<Transaksi> list = null;
-//        Pageable show_data = PageRequest.of(page, size, Sort.by("id").descending());//batasin roq
-//
-//        if(namaBarang != null && !namaBarang.isEmpty()){
-//            list = transaksiRepository.findByBarangNamaLike("%"+namaBarang+"%",show_data);
-//        } if(namPembeli != null && !namPembeli.isEmpty()){
-//            list = transaksiRepository.findByPembeliNamaLike("%"+namPembeli+"%",show_data);
-//        } else{
-//            list = transaksiRepository.getAllData(show_data);
-//        }
-//        return new ResponseEntity<Map>(templateResponse.templateSukses(list), new HttpHeaders(), HttpStatus.OK);
-//    }
+    @GetMapping("/list")
+    public ResponseEntity<Map> listByNama(
+            @RequestParam() Integer page,
+            @RequestParam() Integer size
+    )
+    {
+        Map map = new HashMap();
+        Page<Transaksi> list = null;
+        Pageable show_data = PageRequest.of(page, size, Sort.by("id").descending());
+
+        list = transaksiRepository.getAllData(show_data);
+        return new ResponseEntity<Map>(templateResponse.templateSukses(list), new HttpHeaders(), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Map> getId(@PathVariable(value = "id") Long id){
+        Map barang = transaksiService.getById(id);
+        return new ResponseEntity<Map>(templateResponse.templateSukses(barang), HttpStatus.OK);
+    }
 }

@@ -4,6 +4,7 @@ package dibimbing.team2.service.impl;
 import dibimbing.team2.config.Config;
 import dibimbing.team2.dao.request.LoginModel;
 import dibimbing.team2.dao.request.RegisterModel;
+import dibimbing.team2.model.Pembeli;
 import dibimbing.team2.model.oauth.Role;
 import dibimbing.team2.model.oauth.User;
 import dibimbing.team2.repository.oauth.RoleRepository;
@@ -28,10 +29,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.client.HttpStatusCodeException;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -224,6 +222,44 @@ public class UserServiceImpl implements UserService {
         }
 
     }
+
+    @Override
+    public Map updateUser(RegisterModel objModel, Long idUser) {
+        try {
+            User update = repoUser.checkExistingEmail(objModel.getEmail());
+            if ( templateResponse.chekNull(update) ){
+                return templateResponse.templateEror("User not found");
+            }
+            if ( !templateResponse.chekNull(objModel.getFullname()) ){
+                update.setFullname(objModel.getFullname());
+            }
+            if ( !templateResponse.chekNull(objModel.getUsername() )){
+                update.setUsername1(objModel.getUsername());
+            }
+
+            User updateUser = repoUser.save(update);
+
+            return templateResponse.templateSukses(update);
+        } catch ( Exception e ){
+            return templateResponse.templateEror(e);
+        }
+    }
+
+//    @Override
+//    public Map deactivateUser(Long idUser) {
+//        try {
+//            User delete = repoUser.checkById(idUser);
+//            if ( templateResponse.chekNull(delete) ){
+//                return templateResponse.templateEror("User not found");
+//            }
+//            repoUse(delete);
+//            return templateResponse.templateSukses("Your account has been deactivated, Thank you");
+//        } catch ( Exception e ){
+//            return templateResponse.templateEror(e);
+//        }
+//    }
+
+
 }
 
 

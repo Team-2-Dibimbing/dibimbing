@@ -17,5 +17,9 @@ public interface UserService {
 
     Map registerManual(RegisterModel objModel);
 
+    Map updateUser(RegisterModel objModel, Long idUser);
+
+//    Map deactivateUser(Long idUser);
+
 
 }
